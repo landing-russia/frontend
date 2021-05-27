@@ -3,9 +3,10 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   purge: [
-    "../tailwind/templates/**/*.html",
-    "../templates/**/*.html",
+    // "../tailwind/templates/**/*.html",
+    // "../templates/**/*.html",
     "./src/**/*.js",
+    "./**/*.html",
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {

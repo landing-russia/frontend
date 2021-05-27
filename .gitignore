@@ -5,3 +5,5 @@ deploy.sh
 nbproject
 .directory
 _ide_helper.php
+.vscode
+.idea
