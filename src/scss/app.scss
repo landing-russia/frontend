@@ -6,5 +6,49 @@
 
 @layer components {
 
+    // navbar-01
+    .navbar-link {
+        @apply px-3 py-2 rounded-md text-base font-medium focus:outline-none;
+    }
+
+    .navbar-link.non-active {
+        @apply text-gray-600 hover:bg-gray-100 hover:text-gray-700 focus:text-gray-700 focus:bg-gray-100;
+    }
+
+    .navbar-link.active {
+        @apply bg-amber-500 hover:bg-amber-600 focus:bg-amber-600 text-white;
+    }
+
+    .navbar-button{
+        @apply rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 focus:ring-opacity-50;
+    }
+
+    .navbar-button.icon {
+        @apply p-1 text-gray-400 hover:text-gray-500;
+    }
+
+    .navbar-button.user {
+        @apply bg-gray-100 flex text-sm;
+    }
+
+    .navbar-dropdown-item {
+        @apply block px-4 py-2 text-sm font-medium text-gray-600 hover:bg-gray-100 focus:outline-none focus:bg-gray-100;
+    }
+
+    .mobile-menu-button {
+        @apply inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-amber-500;
+    }
+
+    .mobile-menu-link {
+        @apply block px-3 py-2 rounded-md text-base font-medium;
+    }
+
+    .mobile-menu-link.non-active {
+        @apply text-gray-600 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100;
+    }
+
+    .mobile-menu-link.active {
+        @apply bg-amber-500 text-white focus:outline-none focus:bg-amber-600;
+    }
 
 }

@@ -9,27 +9,34 @@
   </head>
 
   <body class="antialiased font-sans bg-gray-100">
-    <nav class="bg-white shadow">
+    <nav class="bg-white shadow" x-data="{mobileOpen:false}">
       <div class="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
           <div class="flex items-center">
             <div class="flex-shrink-0">
-              <!-- <img class="block lg:hidden h-8 w-auto" src="/dist/i/logo.svg" alt="Workflow" /> -->
-              <img class="block h-10 md:h-12 w-auto" src="/dist/i/logo.svg" alt="Workflow" />
+              <img
+                class="block h-12 w-auto"
+                src="/dist/i/logo.svg"
+                alt="Я-Евпатория!"
+              />
             </div>
             <div class="hidden sm:block sm:ml-6">
               <div class="flex space-x-4">
-                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <a href="#" class="bg-amber-500 text-white px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-50">Экскурсии</a>
-                <a href="#" class="text-gray-600 hover:bg-gray-100 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-50">Контакты</a>
+                <a href="#" class="navbar-link active">Экскурсии</a>
+                <a href="#" class="navbar-link non-active">Контакты</a>
               </div>
             </div>
           </div>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex items-center">
-              <button class="p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-50">
+              <button class="navbar-button icon">
                 <span class="sr-only">Избранное</span>
-                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -40,14 +47,16 @@
               </button>
 
               <!-- Profile dropdown -->
-              <div class="ml-3 relative">
+              <div class="ml-3 relative" x-data="{isOpen:false}">
                 <div>
                   <button
                     type="button"
-                    class="bg-gray-100 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-opacity-50"
+                    class="navbar-button user"
                     id="user-menu-button"
                     aria-expanded="false"
                     aria-haspopup="true"
+                    @click="isOpen = !isOpen"
+                    @keydown.escape="isOpen = false"
                   >
                     <span class="sr-only">Open user menu</span>
                     <img
@@ -57,27 +66,26 @@
                     />
                   </button>
                 </div>
-
-                <!--
-                  Dropdown menu, show/hide based on menu state.
-    
-                  Entering: "transition ease-out duration-100"
-                    From: "transform opacity-0 scale-95"
-                    To: "transform opacity-100 scale-100"
-                  Leaving: "transition ease-in duration-75"
-                    From: "transform opacity-100 scale-100"
-                    To: "transform opacity-0 scale-95"
-                -->
                 <div
-                  class="origin-top-right absolute right-0 mt-2 w-48 rounded-md border border-gray-100 shadow-lg py-1 bg-white ring-1 ring-amber-500 ring-opacity-5 focus:outline-none"
+                  class="origin-top-right absolute right-0 mt-2 w-48 rounded-md border border-gray-100 shadow-lg py-1 bg-white"
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="user-menu-button"
-                  tabindex="-1"
+                  x-show="isOpen"
+                  @click.away="isOpen = false"
+                  x-transition:enter="transition origin-top-right ease-out duration-100"
+                  x-transition:enter-start="opacity-0 transform scale-75"
+                  x-transition:enter-end="opacity-100 transform scale-100"
+                  x-transition:leave="transition origin-top-right ease-in duration-100"
+                  x-transition:leave-start="opacity-100 transform scale-100"
+                  x-transition:leave-end="opacity-0 transform scale-75"
                 >
-                  <!-- Active: "bg-gray-100", Not Active: "" -->
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" id="user-menu-item-0">Профиль</a>
-                  <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" tabindex="-1" id="user-menu-item-1">Выйти</a>
+                  <a href="#" class="navbar-dropdown-item" role="menuitem"
+                    >Профиль</a
+                  >
+                  <a href="#" class="navbar-dropdown-item" role="menuitem"
+                    >Выйти</a
+                  >
                 </div>
               </div>
             </div>
@@ -86,9 +94,11 @@
             <!-- Mobile menu button -->
             <button
               type="button"
-              class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-amber-500"
+              class="mobile-menu-button"
               aria-controls="mobile-menu"
               aria-expanded="false"
+              @click="mobileOpen = !mobileOpen"
+              @keydown.escape="mobileOpen = false"
             >
               <span class="sr-only">Меню</span>
               <!--
@@ -98,8 +108,21 @@
     
                 Menu open: "hidden", Menu closed: "block"
               -->
-              <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              <svg
+                class="block h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+                x-show="!mobileOpen"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
               <!--
                 Icon when menu is open.
@@ -108,8 +131,21 @@
     
                 Menu open: "block", Menu closed: "hidden"
               -->
-              <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              <svg
+                class="block h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+                x-show="mobileOpen"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
@@ -117,11 +153,23 @@
       </div>
 
       <!-- Mobile menu, show/hide based on menu state. -->
-      <div class="sm:hidden" id="mobile-menu">
+      <div
+        class="sm:hidden"
+        id="mobile-menu"
+        x-show="mobileOpen"
+        x-transition:enter="transition origin-top ease-out duration-100"
+        x-transition:enter-start="opacity-0 transform -translate-y-6"
+        x-transition:enter-end="opacity-100 transform translate-y-0"
+        x-transition:leave="transition origin-top ease-in duration-100"
+        x-transition:leave-start="opacity-100 transform translate-y-0"
+        x-transition:leave-end="opacity-0 transform -translate-y-6"
+        @click.away="mobileOpen = false"
+        
+      >
         <div class="px-2 pt-2 pb-3 space-y-1">
           <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-          <a href="#" class="bg-amber-500 text-white block px-3 py-2 rounded-md text-base font-medium">Экскурсии</a>
-          <a href="#" class="text-gray-600 hover:bg-gray-100 hover:text-gray-700 block px-3 py-2 rounded-md text-base font-medium">Контакты</a>
+          <a href="#" class="mobile-menu-link active">Экскурсии</a>
+          <a href="#" class="mobile-menu-link non-active">Контакты</a>
         </div>
         <div class="pt-4 pb-3 border-t border-gray-100">
           <div class="flex items-center px-5">
@@ -134,13 +182,18 @@
             </div>
             <div class="ml-3">
               <div class="text-base font-medium text-gray-600">Tom Cook</div>
-              <div class="text-sm font-medium text-gray-600">tom@example.com</div>
+              <div class="text-sm font-medium text-gray-600">
+                tom@example.com
+              </div>
             </div>
-            <button
-              class="ml-auto flex-shrink-0 p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-amber-500 focus:ring-white"
-            >
+            <button class="ml-auto flex-shrink-0 navbar-button icon">
               <span class="sr-only">Избранное</span>
-              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
                 <path
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -151,8 +204,8 @@
             </button>
           </div>
           <div class="mt-3 px-2 space-y-1">
-            <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-700 hover:bg-gray-100">Профиль</a>
-            <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-700 hover:bg-gray-100">Выйти</a>
+            <a href="#" class="mobile-menu-link non-active">Профиль</a>
+            <a href="#" class="mobile-menu-link non-active">Выйти</a>
           </div>
         </div>
       </div>
